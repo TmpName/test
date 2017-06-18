@@ -17,8 +17,26 @@ Pluginhandle = int(sys.argv[1])
 
 class cGui():
 
-    #affiche les dossiers simple
-    #multi site - multi fonction
+    #utile quand liste de > un site une function un fanart - menu context de base - sous menus et toutes les sources
+    def OnesiteOnefunction(self, Site, Function, Fanart, olist): #olist >> nom, thumb , siteUrl ce qui change
+
+        listing = []
+        for aEntry in olist:
+
+            list_item = xbmcgui.ListItem(label=aEntry[0])
+
+            list_item.setArt({'thumb': path+aEntry[1],'icon': path+aEntry[1],'fanart': path+Fanart})
+            
+            list_item.addContextMenuItems(self.defaultContext())
+
+            url = self.CreateUrl(Site, Function, aEntry[0], aEntry[1], Fanart, aEntry[2])
+
+            listing.append((url, list_item, True))
+
+        xbmcplugin.addDirectoryItems(Pluginhandle, listing, len(listing))
+        
+    #affiche les dossiers simple par liste complete - menu context de base 
+    #multi site - multi fonction etc...
     def addSimpleFolder(self, olist):
 
         listing = []
@@ -54,30 +72,8 @@ class cGui():
             listing.append((url, list_item, True))
 
         xbmcplugin.addDirectoryItems(Pluginhandle, listing, len(listing))
-        
-    #affiche les dossiers genres
-    #oGui.addGenreFolder(SITE_IDENTIFIER,'showMovies',liste)
-    #meme site meme function donc    
-    def addGenreFolder(self, Site, Function, olist):
-        oInputParameterHandler = cInputParameterHandler()
-        sFanart = oInputParameterHandler.getValue('fanart')
 
-        listing = []
-        for aEntry in olist:
 
-            list_item = xbmcgui.ListItem(label=aEntry[0])
-
-            list_item.setArt({'thumb': path+'genres.png','icon': path+'genres.png','fanart': path+sFanart})
-            
-            list_item.addContextMenuItems(self.defaultContext())
-
-            url = url = self.CreateUrl(Site, Function, aEntry[0],'genres.png',sFanart,'siteUrl='+aEntry[1])
-
-            listing.append((url, list_item, True))
-
-        xbmcplugin.addDirectoryItems(Pluginhandle, listing, len(listing))
-        
-    
     def defaultContext(self):
         context = []
         context.append((VSlang(30023), 'XBMC.RunPlugin('+Pluginurl+'?site=globalParametre&function=opensetting)'))
