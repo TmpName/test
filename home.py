@@ -22,6 +22,9 @@ oGui = cGui()
 
 #>>>>>>("globalSearch", "searchMovie", VSlang(30077)+": "+"Films", "search.png", "search_fanart.jpg", params)
 
+#ou 
+
+#oGui.OnesiteOnefunction = #un site une function un fanart + une liste de [nom thumb url]
 
 class cHome:
     def __init__(self):
@@ -89,33 +92,34 @@ class cHome:
         
         Films_params = "siteUrl=http://venom&disp=search1&type="+VSgetsetting('search1_type')+"&readdb=True"
         
-        Films = ("globalSearch", "searchMovie", VSlang(30077)+": "+VSgetsetting('search1_label'), "search.png", "search_fanart.jpg", Films_params)
+        Films = (VSlang(30077)+": "+VSgetsetting('search1_label'), "search.png", Films_params)
         
         Series_params = "siteUrl=http://venom&disp=search2&type="+VSgetsetting('search2_type')+"&readdb=True"
         
-        Series = ("globalSearch", "searchMovie", VSlang(30089)+": "+VSgetsetting('search2_label'), "search.png", "search_fanart.jpg", Series_params)
+        Series = (VSlang(30089)+": "+VSgetsetting('search2_label'), "search.png", Series_params)
         
         Animes_params = "siteUrl=http://venom&disp=search3&type="+VSgetsetting('search3_type')+"&readdb=True"
         
-        Animes = ("globalSearch", "searchMovie", VSlang(30090)+": "+VSgetsetting('search3_label'), "search.png", "search_fanart.jpg", Animes_params)
+        Animes = (VSlang(30090)+": "+VSgetsetting('search3_label'), "search.png", Animes_params)
         
         Docs_params = "siteUrl=http://venom&disp=search4&type="+VSgetsetting('search4_type')+"&readdb=True"
         
-        Docs = ("globalSearch", "searchMovie", VSlang(30091)+": "+VSgetsetting('search4_label'), "search.png", "doc_fanart.jpg", Docs_params)
+        Docs = (VSlang(30091)+": "+VSgetsetting('search4_label'), "search.png", Docs_params)
         
         Choix_params = "siteUrl=http://venom&disp=search5&readdb=True"
         
-        Choix = ("globalSearch", "searchMovie", ('%s 5: %s') % (VSlang(30076), VSlang(30092)), "search.png", "search_fanart.jpg", Choix_params)
+        Choix = (('%s 5: %s') % (VSlang(30076), VSlang(30092)), "search.png", Choix_params)
         
         Alluc_params = "siteUrl=http://venom&disp=search10&readdb=True"
         
-        Alluc = ("globalSearch", "searchMovie", VSlang(30417), "search.png", "search_fanart.jpg", Alluc_params)
+        Alluc = (VSlang(30417), "search.png", "search_fanart.jpg", Alluc_params)
         
         History = ("None" , "DoNothing", VSlang(30416), "search.png", "search_fanart.jpg", "siteUrl=http://venom")
 
         self.Submenu.extend([Films,Series,Animes,Docs,Choix,Alluc])
+        
         #dossier recherche
-        oGui.addSimpleFolder(self.Submenu)
+        oGui.OnesiteOnefunction("globalSearch", "searchMovie","search_fanart.jpg", self.Submenu)
  
         if (VSgetsetting("history-view") == 'true'):
             row = cDb().get_history()
@@ -141,120 +145,123 @@ class cHome:
                     aEntry = ("globalSearch", "searchMovie", match[1], "search.png", "search_fanart.jpg", sParams)
             
                     olist.append(aEntry)
+                    
                 #historique
                 oGui.addHistoryFolder(olist)
+                
                 #supprimer l'historique
                 oGui.addSimpleFolder([(SITE_IDENTIFIER, 'delSearch', VSlang(30413), "search.png", "search_fanart.jpg" , "siteUrl=http://venom")])
 
         oGui.endOfDirectory()
- 
+        
+    # <<<  un site une fonction un fanart - une liste  >>>
     def showReplay(self): 
 
-        Replay_news = ("sitehandler", "callplugin",Deco % (VSlang(30117), VSlang(30101)), "news.png", "replay_fanart.jpg","siteUrl=REPLAYTV_NEWS")
+        Replay_news = (Deco % (VSlang(30117), VSlang(30101)), "news.png", "siteUrl=REPLAYTV_NEWS")
         
-        Replay_genres = ("sitehandler","callplugin",Deco % (VSlang(30117), VSlang(30105)), "genres.png", "replay_fanart.jpg", "siteUrl=REPLAYTV_GENRES")
+        Replay_genres = (Deco % (VSlang(30117), VSlang(30105)), "genres.png", "siteUrl=REPLAYTV_GENRES")
         
-        Replay_sources = ("sitehandler", "callplugin", VSlang(30138), "host.png", "replay_fanart.jpg", "siteUrl=REPLAYTV_REPLAYTV")
+        Replay_sources = (VSlang(30138), "host.png", "siteUrl=REPLAYTV_REPLAYTV")
  
         self.Submenu.extend([Replay_news,Replay_genres,Replay_sources])
  
-        oGui.addSimpleFolder(self.Submenu)
+        oGui.OnesiteOnefunction("sitehandler", "callplugin", "replay_fanart.jpg", self.Submenu)
         
         oGui.endOfDirectory()
 
     def showMovies(self):
 
-        Films_news = ("sitehandler", "callplugin", Deco % (VSlang(30120), VSlang(30101)),"news.png", "films_fanart.jpg", "siteUrl=MOVIE_NEWS")
+        Films_news = (Deco % (VSlang(30120), VSlang(30101)),"news.png", "siteUrl=MOVIE_NEWS")
         
-        Films_hd = ("sitehandler", "callplugin", Deco % (VSlang(30120), VSlang(30160)), "films_hd.png", "films_fanart.jpg", "siteUrl=MOVIE_HD")
+        Films_hd = (Deco % (VSlang(30120), VSlang(30160)), "films_hd.png", "siteUrl=MOVIE_HD")
         
-        Films_views = ("sitehandler", "callplugin",Deco % (VSlang(30120), VSlang(30102)), "views.png", "films_fanart.jpg", "siteUrl=MOVIE_VIEWS")
+        Films_views = (Deco % (VSlang(30120), VSlang(30102)), "views.png", "siteUrl=MOVIE_VIEWS")
         
-        Films_coms = ("sitehandler", "callplugin", Deco % (VSlang(30120), VSlang(30103)), "comments.png", "films_fanart.jpg", "siteUrl=MOVIE_COMMENTS")
+        Films_coms = (Deco % (VSlang(30120), VSlang(30103)), "comments.png", "siteUrl=MOVIE_COMMENTS")
         
-        Films_notes = ("sitehandler", "callplugin", Deco % (VSlang(30120), VSlang(30104)), "notes.png", "films_fanart.jpg", "siteUrl=MOVIE_NOTES")
+        Films_notes = (Deco % (VSlang(30120), VSlang(30104)), "notes.png", "siteUrl=MOVIE_NOTES")
         
-        Films_genres = ("sitehandler", "callplugin", Deco % (VSlang(30120), VSlang(30105)), "genres.png", "films_fanart.jpg", "siteUrl=MOVIE_GENRES")
+        Films_genres = (Deco % (VSlang(30120), VSlang(30105)), "genres.png", "siteUrl=MOVIE_GENRES")
         
-        Films_years = ("sitehandler", "callplugin",  Deco % (VSlang(30120), VSlang(30106)), "annees.png", "films_fanart.jpg", "siteUrl=MOVIE_ANNEES")
+        Films_years = (Deco % (VSlang(30120), VSlang(30106)), "annees.png", "siteUrl=MOVIE_ANNEES")
         
-        Films_sources = ("sitehandler", "callplugin", VSlang(30138), "host.png", "films_fanart.jpg", "siteUrl=MOVIE_MOVIE")
+        Films_sources = (VSlang(30138), "host.png", "siteUrl=MOVIE_MOVIE")
 
         self.Submenu.extend([Films_news,Films_hd,Films_views,Films_coms,Films_notes,Films_genres,Films_years,Films_sources])
  
-        oGui.addSimpleFolder(self.Submenu)
+        oGui.OnesiteOnefunction("sitehandler", "callplugin", "films_fanart.jpg", self.Submenu)
         
         oGui.endOfDirectory()
 
     def showSeries(self):
    
-        Series_news = ("sitehandler", "callplugin", Deco % (VSlang(30121), VSlang(30101)), "news.png", "series_fanart.jpg", "siteUrl=SERIE_NEWS")
+        Series_news = (Deco % (VSlang(30121), VSlang(30101)), "news.png", "siteUrl=SERIE_NEWS")
         
-        Series_hd = ("sitehandler", "callplugin", Deco % (VSlang(30121), VSlang(30160)), "films_hd.png", "series_fanart.jpg", "siteUrl=SERIE_HD")
+        Series_hd = (Deco % (VSlang(30121), VSlang(30160)), "films_hd.png", "siteUrl=SERIE_HD")
         
-        Series_genres = ("sitehandler","callplugin", Deco % (VSlang(30121), VSlang(30105)), "genres.png", "series_fanart.jpg", "siteUrl=SERIE_GENRES")
+        Series_genres = (Deco % (VSlang(30121), VSlang(30105)), "genres.png", "siteUrl=SERIE_GENRES")
         
-        Series_years = ("sitehandler","callplugin", Deco % (VSlang(30121), VSlang(30106)), "annees.png", "series_fanart.jpg", "siteUrl=SERIE_ANNEES")
+        Series_years = (Deco % (VSlang(30121), VSlang(30106)), "annees.png", "siteUrl=SERIE_ANNEES")
         
-        Series_vf = ("sitehandler", "callplugin", Deco % (VSlang(30121), VSlang(30107)), "vf.png", "series_fanart.jpg", "siteUrl=SERIE_VFS")
+        Series_vf = (Deco % (VSlang(30121), VSlang(30107)), "vf.png", "siteUrl=SERIE_VFS")
         
-        Series_vostfr = ("sitehandler", "callplugin", Deco % (VSlang(30121), VSlang(30108)), "vostfr.png", "series_fanart.jpg", "siteUrl=SERIE_VOSTFRS")
+        Series_vostfr = (Deco % (VSlang(30121), VSlang(30108)), "vostfr.png", "siteUrl=SERIE_VOSTFRS")
         
-        Series_sources = ("sitehandler", "callplugin", VSlang(30138) , "host.png", "series_fanart.jpg", "siteUrl=SERIE_SERIES")
+        Series_sources = (VSlang(30138) , "host.png", "siteUrl=SERIE_SERIES")
 
         self.Submenu.extend([Series_news,Series_hd,Series_genres,Series_years,Series_vf,Series_vostfr,Series_sources])
   
-        oGui.addSimpleFolder(self.Submenu)
+        oGui.OnesiteOnefunction("sitehandler", "callplugin", "series_fanart.jpg", self.Submenu)
         
         oGui.endOfDirectory()
  
     def showAnimes(self):
  
-        Animes_news = ("sitehandler", "callplugin", Deco % (VSlang(30122), VSlang(30101)),"news.png","animes_fanart.jpg", "siteUrl=ANIM_NEWS")
+        Animes_news = (Deco % (VSlang(30122), VSlang(30101)),"news.png", "siteUrl=ANIM_NEWS")
         
-        Animes_vf = ("sitehandler", "callplugin", Deco % (VSlang(30122), VSlang(30107)), "vf.png", "animes_fanart.jpg", "siteUrl=ANIM_VFS")
+        Animes_vf = (Deco % (VSlang(30122), VSlang(30107)), "vf.png", "siteUrl=ANIM_VFS")
         
-        Animes_vostfr = ("sitehandler","callplugin", Deco % (VSlang(30122), VSlang(30108)), "vostfr.png", "animes_fanart.jpg", "siteUrl=ANIM_VOSTFRS")
+        Animes_vostfr = (Deco % (VSlang(30122), VSlang(30108)), "vostfr.png", "siteUrl=ANIM_VOSTFRS")
         
-        Animes_genres = ("sitehandler", "callplugin", Deco % (VSlang(30122), VSlang(30105)), "genres.png", "animes_fanart.jpg", "siteUrl=ANIM_GENRES")
+        Animes_genres = (Deco % (VSlang(30122), VSlang(30105)), "genres.png", "siteUrl=ANIM_GENRES")
         
-        Animes_years = ("sitehandler","callplugin", Deco % (VSlang(30122), VSlang(30106)), "annees.png", "animes_fanart.jpg", "siteUrl=ANIM_ANNEES")
+        Animes_years = (Deco % (VSlang(30122), VSlang(30106)), "annees.png", "siteUrl=ANIM_ANNEES")
         
-        Animes_kids = ("sitehandler", "callplugin", Deco % (VSlang(30122), VSlang(30109)), "animes_enfants.png", "animes_fanart.jpg", "siteUrl=ANIM_ENFANTS")
+        Animes_kids = (Deco % (VSlang(30122), VSlang(30109)), "animes_enfants.png", "siteUrl=ANIM_ENFANTS")
         
-        Animes_sources = ("sitehandler", "callplugin", VSlang(30138), "host.png", "animes_fanart.jpg", "siteUrl=ANIM_ANIMS")
+        Animes_sources = (VSlang(30138), "host.png", "siteUrl=ANIM_ANIMS")
 
         self.Submenu.extend([Animes_news,Animes_vf,Animes_vostfr,Animes_genres,Animes_years,Animes_kids,Animes_sources])
 
-        oGui.addSimpleFolder(self.Submenu)
+        oGui.OnesiteOnefunction("sitehandler", "callplugin", "animes_fanart.jpg", self.Submenu)
         
         oGui.endOfDirectory()
 
     def showDocs(self):
     
-        Docs_news = ("sitehandler", "callplugin", Deco % (VSlang(30112), VSlang(30101)), "news.png", "doc_fanart.jpg", "siteUrl=DOC_NEWS" )
+        Docs_news = (Deco % (VSlang(30112), VSlang(30101)), "news.png", "siteUrl=DOC_NEWS" )
         
-        Docs_genres = ("sitehandler", "callplugin", Deco % (VSlang(30112), VSlang(30105)), "genres.png", "doc_fanart.jpg", "siteUrl=DOC_GENRES" )
+        Docs_genres = (Deco % (VSlang(30112), VSlang(30105)), "genres.png", "siteUrl=DOC_GENRES" )
         
-        Docs_sources = ("sitehandler", "callplugin", VSlang(30138), "host.png", "doc_fanart.jpg", "siteUrl=DOC_DOCS")
+        Docs_sources = (VSlang(30138), "host.png", "siteUrl=DOC_DOCS")
 
         self.Submenu.extend([Docs_news,Docs_genres,Docs_sources])
   
-        oGui.addSimpleFolder(self.Submenu) 
+        oGui.OnesiteOnefunction("sitehandler", "callplugin", "doc_fanart.jpg", self.Submenu) 
         
         oGui.endOfDirectory()
         
     def showNets(self): 
 
-        Videos_news = ("sitehandler", "callplugin", Deco % (VSlang(30114), VSlang(30101)), "news.png", "vstreamfanart.jpg", "siteUrl=NETS_NEWS")
+        Videos_news = (Deco % (VSlang(30114), VSlang(30101)), "news.png", "siteUrl=NETS_NEWS")
         
-        Videos_genres = ("sitehandler", "callplugin", Deco % (VSlang(30114), VSlang(30105)), "genres.png", "vstreamfanart.jpg", "siteUrl=NETS_GENRES")
+        Videos_genres = (Deco % (VSlang(30114), VSlang(30105)), "genres.png", "siteUrl=NETS_GENRES")
         
-        Videos_sources = ("sitehandler", "callplugin", VSlang(30138), "host.png", "vstreamfanart.jpg", "siteUrl=MOVIE_NETS")
+        Videos_sources = (VSlang(30138), "host.png", "siteUrl=MOVIE_NETS")
  
         self.Submenu.extend([Videos_news,Videos_genres,Videos_sources])
 
-        oGui.addSimpleFolder(self.Submenu)
+        oGui.OnesiteOnefunction("sitehandler", "callplugin", "vstreamfanart.jpg", self.Submenu)
         
         oGui.endOfDirectory()
 
