@@ -111,7 +111,7 @@ class cHome:
         
         Alluc = (VSlang(30417), "search.png", "search_fanart.jpg", Alluc_params)
         
-        History = ("DoNothing" , "DoNothing", VSlang(30416), "none.png", "search_fanart.jpg", "http://venom")
+        History = ("DoNothing" , "DoNothing", VSlang(30416), "none.png", "search_fanart.jpg", "siteUrl=http://venom")
 
         self.Submenu.extend([Films,Series,Animes,Docs,Choix,Alluc])
         
