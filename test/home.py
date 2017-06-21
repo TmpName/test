@@ -109,7 +109,7 @@ class cHome:
         
         Alluc_params = "http://venom&disp=search10&readdb=True"
         
-        Alluc = (VSlang(30417), "search.png", "search_fanart.jpg", Alluc_params)
+        Alluc = (VSlang(30417), "search.png", Alluc_params)
         
         History = ("DoNothing" , "DoNothing", VSlang(30416), "none.png", "search_fanart.jpg", "siteUrl=http://venom")
 
