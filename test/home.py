@@ -89,23 +89,23 @@ class cHome:
 
         Films_params = "http://venom&disp=search1&type="+VSgetsetting('search1_type')+"&readdb=True"
         
-        Films = (VSlang(30077)+": "+VSgetsetting('search1_label'), "search.png", "search_fanart.jpg", Films_params)
+        Films = (VSlang(30077)+": "+VSgetsetting('search1_label'), "search.png", Films_params)
         
         Series_params = "http://venom&disp=search2&type="+VSgetsetting('search2_type')+"&readdb=True"
         
-        Series = (VSlang(30089)+": "+VSgetsetting('search2_label'), "search.png", "search_fanart.jpg", Series_params)
+        Series = (VSlang(30089)+": "+VSgetsetting('search2_label'), "search.png", Series_params)
         
         Animes_params = "http://venom&disp=search3&type="+VSgetsetting('search3_type')+"&readdb=True"
         
-        Animes = (VSlang(30090)+": "+VSgetsetting('search3_label'), "search.png","search_fanart.jpg", Animes_params)
+        Animes = (VSlang(30090)+": "+VSgetsetting('search3_label'), "search.png", Animes_params)
         
         Docs_params = "http://venom&disp=search4&type="+VSgetsetting('search4_type')+"&readdb=True"
         
-        Docs = (VSlang(30091)+": "+VSgetsetting('search4_label'), "search.png", "search_fanart.jpg", Docs_params)
+        Docs = (VSlang(30091)+": "+VSgetsetting('search4_label'), "search.png",  Docs_params)
         
         Choix_params = "http://venom&disp=search5&readdb=True"
         
-        Choix = (('%s 5: %s') % (VSlang(30076), VSlang(30092)), "search.png", "search_fanart.jpg", Choix_params)
+        Choix = (('%s 5: %s') % (VSlang(30076), VSlang(30092)), "search.png", Choix_params)
         
         Alluc_params = "http://venom&disp=search10&readdb=True"
         
