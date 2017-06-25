@@ -2,6 +2,9 @@
 #https://github.com/Kodi-vStream/venom-xbmc-addons
 #nom du site ,fonction , nom , thumb , fanart, le reste
 
+#repet folder nécessaire pour prendre en compte toutes les variantes
+#gagnant au final moins de texte, moins d'icones en doublon, etc.. 
+
 from resources.test.util import VSlog,VStranslatePathAddon,VSlang,isKrypton
 from resources.lib.handler.inputParameterHandler import cInputParameterHandler
 import xbmc
@@ -17,9 +20,9 @@ Pluginhandle = int(sys.argv[1])
 
 class cGui():
     
-    #affiche les dossiers simple par liste complete - menu context de base ou context de l'historique
-    #multi site - multi fonction etc...
-    def HomeFolder(self, Olist, History=False):
+    #dossiers simple liste complete - menu context de base ou context de l'historique
+    #multi site - multi fonction multi etc...
+    def FolderType1(self, Olist, History=False):
     
         Context = self.defaultContext()
         Listing = []
@@ -40,8 +43,8 @@ class cGui():
 
         xbmcplugin.addDirectoryItems(Pluginhandle, Listing, len(Listing))
         
-    #sous menu home uniquement (evite repetion de texte dans home)
-    def HomeSubFolder(self, Site, Function, Fanart, olist):
+    #sous menu home uniquement pour le moment (evite repetion de texte dans home)
+    def FolderType2(self, Site, Function, Fanart, olist):
     
         Context = self.defaultContext()
         listing = []
@@ -59,6 +62,25 @@ class cGui():
 
         xbmcplugin.addDirectoryItems(Pluginhandle, listing, len(listing))
         
+    #pour genre ,annee etc... site , fonction, thumb, fanart, une liste(Nom,Url) #voir exemple.py
+    def FolderType3(self, Site, Function, Thumb, Fanart, olist):
+
+        listing = []
+        for aEntry in olist:
+
+            list_item = xbmcgui.ListItem(label=aEntry[0])
+
+            list_item.setArt({'thumb': path+Thumb,'icon': path+Thumb,'fanart': path+Fanart})
+   
+            list_item.addContextMenuItems(self.defaultContext())
+
+            url = CreateUrl(Site, Function, aEntry[0], Thumb, Fanart, 'siteUrl='+str(aEntry[1]))
+
+            listing.append((url, list_item, True))
+
+        xbmcplugin.addDirectoryItems(Pluginhandle, listing, len(listing))
+        
+    
     def defaultContext(self):
         Context = []
         if (isKrypton() == True):
@@ -77,4 +99,4 @@ class cGui():
     def endOfDirectory(self):
         xbmcplugin.addSortMethod(Pluginhandle, xbmcplugin.SORT_METHOD_NONE)
         xbmcplugin.endOfDirectory(Pluginhandle,True,cacheToDisc=True) #cache pas vraiment nécessaire    
-        
+  
