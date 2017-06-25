@@ -64,7 +64,8 @@ class cGui():
         
     #pour genre ,annee etc... site , fonction, thumb, fanart, une liste(Nom,Url) #voir exemple.py
     def FolderType3(self, Site, Function, Thumb, Fanart, olist):
-
+        
+        Context = self.defaultContext()
         listing = []
         for aEntry in olist:
 
@@ -72,7 +73,7 @@ class cGui():
 
             list_item.setArt({'thumb': path+Thumb,'icon': path+Thumb,'fanart': path+Fanart})
    
-            list_item.addContextMenuItems(self.defaultContext())
+            list_item.addContextMenuItems(Context)
 
             url = CreateUrl(Site, Function, aEntry[0], Thumb, Fanart, 'siteUrl='+str(aEntry[1]))
 
