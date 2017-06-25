@@ -2,7 +2,6 @@
 #https://github.com/Kodi-vStream/venom-xbmc-addons
 from resources.test.util import VSlog,VSgetsetting,VSlang
 from resources.test.gui import cGui
-
 from resources.lib.handler.outputParameterHandler import cOutputParameterHandler
 from resources.lib.db import cDb
 import xbmcgui
@@ -13,20 +12,9 @@ Deco = '%s [COLOR '+VSgetsetting('deco_color')+'](%s)[/COLOR]'
 
 oGui = cGui()
 
-# >>>> suivre cet ordre >>>> site fonction name thumb fanart 5eme argument
-
-# le 5 eme argument est reservé soit a l'url format("siteUrl=http://venom") soit a oOutputParameterHandler
-# oOutputParameterHandler.addParameter('siteUrl', 'http://venom')
-# oOutputParameterHandler.addParameter('disp', match[2])
-# params = oOutputParameterHandler.getParameterAsUri()
-
-#>>>>>>("globalSearch", "searchMovie", VSlang(30077)+": "+"Films", "search.png", "search_fanart.jpg", params)
-
-#sauf pour HomeSubFolder
-
 class cHome:
     def __init__(self):
-        self.Submenu = []
+        self.SubMenu = []
 
         
     def load(self):
@@ -81,7 +69,7 @@ class cHome:
             Menu.append(("MAJ", "showUpdate", VSlang(30418), "update.png", "update_fanart.jpg", "siteUrl=http://venom"))
   
 
-        oGui.HomeFolder(Menu)
+        oGui.FolderType1(Menu)
         
         oGui.endOfDirectory()
         
@@ -113,17 +101,17 @@ class cHome:
         
         History = ("DoNothing" , "DoNothing", VSlang(30416), "none.png", "search_fanart.jpg", "siteUrl=http://venom")
 
-        self.Submenu.extend([Films,Series,Animes,Docs,Choix,Alluc])
+        self.SubMenu.extend([Films,Series,Animes,Docs,Choix,Alluc])
         
         #dossier recherche
-        oGui.HomeSubFolder("globalSearch", "searchMovie","search_fanart.jpg",self.Submenu)
+        oGui.FolderType2("globalSearch", "searchMovie","search_fanart.jpg",self.SubMenu)
  
         if (VSgetsetting("history-view") == 'true'):
             row = cDb().get_history()
             olist = []
             if row:
                 #text historique
-                oGui.HomeFolder([History])
+                oGui.FolderType1([History])
                 for match in row:
                     oOutputParameterHandler = cOutputParameterHandler()
 
@@ -144,25 +132,25 @@ class cHome:
                     olist.append(aEntry)
                     
                 #historique
-                oGui.HomeFolder(olist,History=True)
+                oGui.FolderType1(olist,History=True)
                 
                 #supprimer l'historique
-                oGui.HomeFolder([(SITE_IDENTIFIER, 'delSearch', VSlang(30413), "search.png", "search_fanart.jpg" , "siteUrl=http://venom")])
+                oGui.FolderType1([(SITE_IDENTIFIER, 'delSearch', VSlang(30413), "search.png", "search_fanart.jpg" , "siteUrl=http://venom")])
 
         oGui.endOfDirectory()
         
     # <<<  un site une fonction un fanart - une liste  >>>
     def showReplay(self): 
 
-        Replay_news = ( Deco % (VSlang(30117), VSlang(30101)), "news.png", "REPLAYTV_NEWS")
+        Replay_news = (Deco % (VSlang(30117), VSlang(30101)), "news.png", "REPLAYTV_NEWS")
         
-        Replay_genres = ( Deco % (VSlang(30117), VSlang(30105)), "genres.png", "REPLAYTV_GENRES")
+        Replay_genres = (Deco % (VSlang(30117), VSlang(30105)), "genres.png", "REPLAYTV_GENRES")
         
-        Replay_sources = ( VSlang(30138), "host.png", "REPLAYTV_REPLAYTV")
+        Replay_sources = (VSlang(30138), "host.png", "REPLAYTV_REPLAYTV")
  
-        self.Submenu.extend([Replay_news,Replay_genres,Replay_sources])
+        self.SubMenu.extend([Replay_news,Replay_genres,Replay_sources])
  
-        oGui.HomeSubFolder("sitehandler","callplugin","replay_fanart.jpg",self.Submenu)
+        oGui.FolderType2("sitehandler","callplugin","replay_fanart.jpg",self.SubMenu)
         
         oGui.endOfDirectory()
 
@@ -184,9 +172,9 @@ class cHome:
         
         Films_sources = (VSlang(30138), "host.png", "MOVIE_MOVIE")
 
-        self.Submenu.extend([Films_news,Films_hd,Films_views,Films_coms,Films_notes,Films_genres,Films_years,Films_sources])
+        self.SubMenu.extend([Films_news,Films_hd,Films_views,Films_coms,Films_notes,Films_genres,Films_years,Films_sources])
  
-        oGui.HomeSubFolder("sitehandler","callplugin","films_fanart.jpg",self.Submenu)
+        oGui.FolderType2("sitehandler","callplugin","films_fanart.jpg",self.SubMenu)
         
         oGui.endOfDirectory()
 
@@ -206,9 +194,9 @@ class cHome:
         
         Series_sources = (VSlang(30138) , "host.png", "SERIE_SERIES")
 
-        self.Submenu.extend([Series_news,Series_hd,Series_genres,Series_years,Series_vf,Series_vostfr,Series_sources])
+        self.SubMenu.extend([Series_news,Series_hd,Series_genres,Series_years,Series_vf,Series_vostfr,Series_sources])
   
-        oGui.HomeSubFolder("sitehandler","callplugin","series_fanart.jpg",self.Submenu)
+        oGui.FolderType2("sitehandler","callplugin","series_fanart.jpg",self.SubMenu)
         
         oGui.endOfDirectory()
  
@@ -228,9 +216,9 @@ class cHome:
         
         Animes_sources = (VSlang(30138), "host.png", "ANIM_ANIMS")
 
-        self.Submenu.extend([Animes_news,Animes_vf,Animes_vostfr,Animes_genres,Animes_years,Animes_kids,Animes_sources])
+        self.SubMenu.extend([Animes_news,Animes_vf,Animes_vostfr,Animes_genres,Animes_years,Animes_kids,Animes_sources])
 
-        oGui.HomeSubFolder("sitehandler","callplugin","animes_fanart.jpg",self.Submenu)
+        oGui.FolderType2("sitehandler","callplugin","animes_fanart.jpg",self.SubMenu)
         
         oGui.endOfDirectory()
 
@@ -242,9 +230,9 @@ class cHome:
         
         Docs_sources = (VSlang(30138), "host.png", "DOC_DOCS")
 
-        self.Submenu.extend([Docs_news,Docs_genres,Docs_sources])
+        self.SubMenu.extend([Docs_news,Docs_genres,Docs_sources])
   
-        oGui.HomeSubFolder("sitehandler","callplugin","doc_fanart.jpg",self.Submenu)
+        oGui.FolderType2("sitehandler","callplugin","doc_fanart.jpg",self.SubMenu)
 
         oGui.endOfDirectory()
         
@@ -256,9 +244,9 @@ class cHome:
         
         Videos_sources = (VSlang(30138), "host.png", "MOVIE_NETS")
  
-        self.Submenu.extend([Videos_news,Videos_genres,Videos_sources])
+        self.SubMenu.extend([Videos_news,Videos_genres,Videos_sources])
 
-        oGui.HomeSubFolder("sitehandler","callplugin","buzz_fanart.jpg",self.Submenu)
+        oGui.FolderType2("sitehandler","callplugin","buzz_fanart.jpg",self.SubMenu)
         
         oGui.endOfDirectory()
 
