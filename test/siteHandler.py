@@ -80,7 +80,7 @@ class cSiteHandler:
         
         aPlugins = self.getAvailablePlugins(sSiteUrl,sFanart)
 
-        oGui.addSimpleFolder(aPlugins)
+        oGui.FolderType1(aPlugins)
         oGui.endOfDirectory()
         
     #toutes les sources
@@ -89,7 +89,7 @@ class cSiteHandler:
         
         aPlugins = self.getAllSources()
 
-        oGui.addSimpleFolder(aPlugins)
+        oGui.FolderType1(aPlugins)
         oGui.endOfDirectory()
         
     def getAllSources(self):
