@@ -6,6 +6,7 @@
 from resources.test.home import cHome
 from resources.test.siteHandler import cSiteHandler
 from resources.test.util import VSlog
+from resources.test.about import cAbout
 
 
 #officiel
@@ -14,7 +15,7 @@ from resources.lib.db import cDb
 from resources.lib.handler.inputParameterHandler import cInputParameterHandler
 from resources.lib.gui.hoster import cHosterGui
 import xbmcaddon,xbmcgui,xbmc
-from resources.lib.about import cAbout
+
 
 class main:
     def __init__(self):
