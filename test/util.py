@@ -10,6 +10,15 @@ COUNT = 0
 DIALOG2 = None
     
 # 14062017 test ok
+def isKrypton():
+    try: 
+        version = xbmc.getInfoLabel('system.buildversion')
+        if version[0:2] >= "17":
+            return True  
+        else:
+            return False
+    except:
+        return False
 
 def VSlog(e):
     xbmc.log('\t[PLUGIN] Vstream: '+str(e), xbmc.LOGNOTICE)
