@@ -164,7 +164,7 @@ class cHoster(iHoster):
             return False, False
 
         sHtmlContent = self.oPremiumHandler.GetHtml(self.__sUrl)
-        VSlog(sHtmlContent)
+
         SubTitle = ''
         SubTitle = self.checkSubtitle(sHtmlContent)
         
@@ -194,27 +194,12 @@ class cHoster(iHoster):
             return False
 
         oParser = cParser()
-        sPattern =  '(?s)<form\sname\s*=[\'"]F1[\'"].+?>(.+?)<center>'
-        aResult = oParser.parse(sHtmlContent, sPattern)
-        
-        if (aResult[0]):
-            sForm = aResult[1][0]
 
-            data = {}
-            for match in re.finditer(r'type="hidden"\s+name="(.+?)"\s+value="(.*?)"', sForm):
-                key, value = match.groups()
-                data[key] = value
-                
-            postdata = urllib.urlencode( data )
-            headers['Referer'] = self.__sUrl
-           
-            sHtmlContent = self.oPremiumHandler.GetHtml(self.__sUrl,postdata) 
-            
-            sPattern =  '<td class=.+?<a href="(.+?)" class=\'big-button-green-flat mt-4 mb-4\'>'
-            aResult = oParser.parse(sHtmlContent, sPattern)
-            
-            if (aResult[0]):
-                return urllib.quote(aResult[1][0], safe=":/")
+        sPattern =  '<a href *=[\'"](?!http:\/\/uptostream.+)([^<>]+?)[\'"] *class=\'big-button-green-flat mt-4 mb-4\''
+        aResult = oParser.parse(sHtmlContent, sPattern)
+
+        if (aResult[0]):
+            return urllib.quote(aResult[1][0], safe=":/")
         
         return False
 
