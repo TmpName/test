@@ -10,13 +10,13 @@ import xbmc
 import xbmcaddon
 import re,os
 
-UA = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; de-DE; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3'
+UA = 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:56.0) Gecko/20100101 Firefox/56.0'
 headers = { 'User-Agent' : UA }
 
 class NoRedirection(urllib2.HTTPErrorProcessor):
     def http_response(self, request, response):
         code, msg, hdrs = response.code, response.msg, response.info()
-        #cConfig().log(str(code))
+
         return response
         
     https_response = http_response
@@ -91,16 +91,12 @@ class cPremiumHandler:
             opener.addheaders.append (('Referer', str(url) ))
             opener.addheaders.append (('Content-Length', str(len(data))))
         
-        
             try:
                 response = opener.open(url,data)
-                sHtmlContent = response.read()
-                #cConfig().log(sHtmlContent)
+                head = response.info()
             except urllib2.URLError, e:
                 return ''
-            head = response.info()
-            #cConfig().log("debug" + str(response.info()))
-            
+
         elif 'onefichier' in self.__sHosterIdentifier:
             url = 'https://1fichier.com/login.pl'
             post_data['mail'] = self.getUsername()
@@ -118,17 +114,15 @@ class cPremiumHandler:
         #si aucun de trouve on retourne
         else:
             return False
-        
-        #print url
-        #print post_data
+            
+        if (self.__ssl):
+            try:
+                import ssl
+                context = ssl._create_unverified_context()
+            except:
+                self.__ssl = False
+                
         if not 'uptobox' in self.__sHosterIdentifier:
-            if (self.__ssl):
-                try:
-                    import ssl
-                    context = ssl._create_unverified_context()
-                except:
-                    self.__ssl = False
-        
             req = urllib2.Request(url, urllib.urlencode(post_data), headers)
         
             try:
@@ -159,7 +153,7 @@ class cPremiumHandler:
 
 
         if 'uptobox' in self.__sHosterIdentifier:
-            if not sHtmlContent:
+            if 'xfss' in response.info()['Set-Cookie']:
                 self.isLogin = True
             else:
                 cGui().showInfo(self.__sDisplayName, 'Authentification rate' , 5)
@@ -210,8 +204,7 @@ class cPremiumHandler:
         try:
             response = urllib2.urlopen(req)
         except urllib2.URLError, e:
-            xbmc.log( str(e.code))
-            xbmc.log( e.reason )
+
             return ''
         
         sHtmlContent = response.read()
