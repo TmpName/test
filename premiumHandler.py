@@ -81,21 +81,6 @@ class cPremiumHandler:
             url = 'https://uptobox.com/?op=login&referer=homepage'
             post_data['login'] = self.getUsername()
             post_data['password'] = self.getPassword()
-            
-            data = urllib.urlencode(post_data)
-        
-            opener = urllib2.build_opener(NoRedirection)  
-        
-            opener.addheaders = [('User-agent', UA)]
-            opener.addheaders.append (('Content-Type', 'application/x-www-form-urlencoded'))
-            opener.addheaders.append (('Referer', str(url) ))
-            opener.addheaders.append (('Content-Length', str(len(data))))
-        
-            try:
-                response = opener.open(url,data)
-                head = response.info()
-            except urllib2.URLError, e:
-                return ''
 
         elif 'onefichier' in self.__sHosterIdentifier:
             url = 'https://1fichier.com/login.pl'
@@ -122,7 +107,22 @@ class cPremiumHandler:
             except:
                 self.__ssl = False
                 
-        if not 'uptobox' in self.__sHosterIdentifier:
+        if 'uptobox' in self.__sHosterIdentifier:
+            data = urllib.urlencode(post_data)
+        
+            opener = urllib2.build_opener(NoRedirection)  
+        
+            opener.addheaders = [('User-agent', UA)]
+            opener.addheaders.append (('Content-Type', 'application/x-www-form-urlencoded'))
+            opener.addheaders.append (('Referer', str(url) ))
+            opener.addheaders.append (('Content-Length', str(len(data))))
+        
+            try:
+                response = opener.open(url,data)
+                head = response.info()
+            except urllib2.URLError, e:
+                return ''
+        else:
             req = urllib2.Request(url, urllib.urlencode(post_data), headers)
         
             try:
@@ -148,12 +148,11 @@ class cPremiumHandler:
                 return False
         
                 sHtmlContent = response.read()
-                head = response.headers
                 response.close()
 
 
         if 'uptobox' in self.__sHosterIdentifier:
-            if 'xfss' in response.info()['Set-Cookie']:
+            if 'xfss' in head['Set-Cookie']:
                 self.isLogin = True
             else:
                 cGui().showInfo(self.__sDisplayName, 'Authentification rate' , 5)
