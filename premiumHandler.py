@@ -148,6 +148,7 @@ class cPremiumHandler:
                 return False
         
                 sHtmlContent = response.read()
+                head = response.headers
                 response.close()
 
 
