@@ -79,7 +79,7 @@ class cPremiumHandler:
         post_data = {}
         
         if 'uptobox' in self.__sHosterIdentifier:
-            url = 'https://uptobox.com/?op=login'
+            url = 'https://uptobox.com/?op=login&referer=homepage'
             post_data['login'] = self.getUsername()
             post_data['password'] = self.getPassword()
 
@@ -121,6 +121,7 @@ class cPremiumHandler:
             try:
                 response = opener.open(url,data)
                 head = response.info()
+                VSlog(head)
             except urllib2.URLError, e:
                 return ''
         else:
@@ -180,9 +181,11 @@ class cPremiumHandler:
             oParser = cParser()
             sPattern = '(?:^|,) *([^;,]+?)=([^;,\/]+?);'
             aResult = oParser.parse(str(head['Set-Cookie']), sPattern)
-            #print aResult
+
             if (aResult[0] == True):
                 for cook in aResult[1]:
+                    if 'deleted' in cook[1]:
+                        continue
                     cookies = cookies + cook[0] + '=' + cook[1]+ ';'
 
         #save cookie
