@@ -321,6 +321,7 @@ def showMovies(sSearch = ''):
             if (aResult[0] == True):
                 oOutputParameterHandler = cOutputParameterHandler()
                 oOutputParameterHandler.addParameter('siteUrl', sSearch)
+                oOutputParameterHandler.addParameter('MAIN', URL_MAIN)
                 oOutputParameterHandler.addParameter('Nextpagesearch', aResult[1][0])
                 oGui.addNext(SITE_IDENTIFIER, 'showMovies', '[COLOR teal]Next >>>[/COLOR]', oOutputParameterHandler)
 
