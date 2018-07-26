@@ -23,14 +23,15 @@ SITE_DESC = 'Fichier en DDL, HD'
 
 URL_HOST = 'https://zone-telechargement1.ws/'
 
-MemorisedHost = ''
-def GetURL_MAIN():
 
-    global MemorisedHost
+def GetURL_MAIN():
+    MemorisedHost = ''
+
    
     oInputParameterHandler = cInputParameterHandler()
     MemorisedHost_2 = oInputParameterHandler.getValue('siteUrl')
     Sources = oInputParameterHandler.getValue('function')
+    sTitle = oInputParameterHandler.getValue('title')
     # z = oInputParameterHandler.getAllParameter()
     # VSlog(z)
     MAIN = ''
@@ -39,15 +40,15 @@ def GetURL_MAIN():
         
 
     #VSlog('site url >>    ' + str(MemorisedHost_2))
-    if MemorisedHost_2 == 'http://venom' and Sources != 'globalSources':
+    if MemorisedHost_2 == 'http://venom' and Sources != 'globalSources' or 'violet' in sTitle:
         oRequestHandler = cRequestHandler(URL_HOST)
         sHtmlContent = oRequestHandler.request()
         MemorisedHost = oRequestHandler.getRealUrl()
         VSlog("besoin d'une url : url récup >>    " + str(MemorisedHost))
         return MemorisedHost
-   
+
     else:
-        VSlog('pas besoin 1er load site ou URL_MAIN déjà définis >> '+ str(MAIN))
+        VSlog('1er load site ou URL_MAIN déjà définis  '+ str(MAIN))
         return MAIN
         
 
@@ -226,11 +227,13 @@ def showGenre():
 def showMovies(sSearch = ''):
     oGui = cGui()
     oParser = cParser()
-    
     oInputParameterHandler = cInputParameterHandler()
     Nextpagesearch = oInputParameterHandler.getValue('Nextpagesearch')
     sUrl = oInputParameterHandler.getValue('siteUrl')
     
+    if not sUrl.startswith('http'):
+       sUrl = URL_MAIN + sUrl
+
     bGlobal_Search = False
 
     if Nextpagesearch:
