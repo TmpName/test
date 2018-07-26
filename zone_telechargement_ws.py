@@ -48,7 +48,7 @@ def GetURL_MAIN():
    
     else:
         VSlog('pas besoin 1er load site ou URL_MAIN déjà définis >> '+ str(MAIN))
-        return  MAIN
+        return MAIN
         
 
 URL_MAIN = GetURL_MAIN()
@@ -307,9 +307,9 @@ def showMovies(sSearch = ''):
             oOutputParameterHandler.addParameter('siteUrl', sUrl2)
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
-
+            oOutputParameterHandler.addParameter('MAIN', URL_MAIN)
             if 'films-gratuit' in sUrl2 or '4k' in sUrl2:
-                  oGui.addMovie(SITE_IDENTIFIER, 'showMoviesLinks', sDisplayTitle, '', sThumb, '', oOutputParameterHandler)
+                oGui.addMovie(SITE_IDENTIFIER, 'showMoviesLinks', sDisplayTitle, '', sThumb, '', oOutputParameterHandler)
             else:
                 oGui.addTV(SITE_IDENTIFIER, 'showSeriesLinks', sDisplayTitle, '', sThumb, '', oOutputParameterHandler)
 
@@ -330,6 +330,7 @@ def showMovies(sSearch = ''):
             if (sNextPage != False):
                 oOutputParameterHandler = cOutputParameterHandler()
                 oOutputParameterHandler.addParameter('siteUrl', sNextPage)
+                oOutputParameterHandler.addParameter('MAIN', URL_MAIN)
                 oGui.addNext(SITE_IDENTIFIER, 'showMovies', '[COLOR teal]Next >>>[/COLOR]', oOutputParameterHandler)
                 
     if Nextpagesearch:
@@ -403,6 +404,7 @@ def showMoviesLinks():
             oOutputParameterHandler.addParameter('siteUrl', sUrl)
             oOutputParameterHandler.addParameter('sMovieTitle', sMovieTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
+            oOutputParameterHandler.addParameter('MAIN', URL_MAIN)
             oGui.addMovie(SITE_IDENTIFIER, 'showHosters', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
 
         progress_.VSclose(progress_)
@@ -471,6 +473,7 @@ def showSeriesLinks():
             oOutputParameterHandler.addParameter('siteUrl', sUrl)
             oOutputParameterHandler.addParameter('sMovieTitle', sMovieTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
+            oOutputParameterHandler.addParameter('MAIN', URL_MAIN)
             oGui.addTV(SITE_IDENTIFIER, 'showSeriesHosters', sDisplayTitle, '', sThumb, '', oOutputParameterHandler)
 
         progress_.VSclose(progress_)
@@ -494,6 +497,7 @@ def showSeriesLinks():
             oOutputParameterHandler.addParameter('siteUrl', sUrl)
             oOutputParameterHandler.addParameter('sMovieTitle', sMovieTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
+            oOutputParameterHandler.addParameter('MAIN', URL_MAIN)
             oGui.addTV(SITE_IDENTIFIER, 'showSeriesLinks', sTitle, 'series.png', sThumb, '', oOutputParameterHandler)
 
     oGui.setEndOfDirectory()
@@ -568,6 +572,7 @@ def showHosters():
 
                 oOutputParameterHandler.addParameter('sMovieTitle', sMovieTitle)
                 oOutputParameterHandler.addParameter('sThumb', sThumb)
+
                 oGui.addMovie(SITE_IDENTIFIER, 'Display_protected_link', sTitle, '', sThumb, '', oOutputParameterHandler)
 
         progress_.VSclose(progress_)
