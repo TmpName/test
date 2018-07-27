@@ -7,7 +7,7 @@ from resources.lib.handler.outputParameterHandler import cOutputParameterHandler
 from resources.lib.handler.requestHandler import cRequestHandler
 from resources.lib.parser import cParser
 from resources.lib.util import cUtil
-from resources.lib.comaddon import progress, dialog, VSlog
+from resources.lib.comaddon import progress, dialog, VSlog, addon
 
 import urllib, re, urllib2
 import random
@@ -23,34 +23,39 @@ SITE_DESC = 'Fichier en DDL, HD'
 
 URL_HOST = 'https://zone-telechargement1.ws/'
 
+ADDON = addon()
 
 def GetURL_MAIN():
     MemorisedHost = ''
-
-   
     oInputParameterHandler = cInputParameterHandler()
     MemorisedHost_2 = oInputParameterHandler.getValue('siteUrl')
     Sources = oInputParameterHandler.getValue('function')
-    sTitle = oInputParameterHandler.getValue('title')
-    # z = oInputParameterHandler.getAllParameter()
-    # VSlog(z)
-    MAIN = ''
-    if (oInputParameterHandler.exist('MAIN')):
-        MAIN = oInputParameterHandler.getValue('MAIN')
-        
 
-    #VSlog('site url >>    ' + str(MemorisedHost_2))
-    if MemorisedHost_2 == 'http://venom' and Sources != 'globalSources' or 'violet' in sTitle:
+    # z = oInputParameterHandler.getAllParameter()
+    # VSlog(z)   
+    
+    # quand vstream load tous les sites on passe >> globalSources
+    # quand vstream load a partir du menu home on passe >> callplugin 
+    # quand l'url ne contient pas celle déjà enregistrer dans settings on active.
+    if not (Sources == 'callpluging' or Sources == 'globalSources' ) and not ADDON.getSetting('ZT') in MemorisedHost_2 :
         oRequestHandler = cRequestHandler(URL_HOST)
         sHtmlContent = oRequestHandler.request()
         MemorisedHost = oRequestHandler.getRealUrl()
-        VSlog("besoin d'une url : url récup >>    " + str(MemorisedHost))
-        return MemorisedHost
-
+        ADDON.setSetting('ZT',MemorisedHost)
+        VSlog("ZT url  >> " + str(MemorisedHost) + ' sauvgarder >> '+ ADDON.getSetting('ZT'))
+        return ADDON.getSetting('ZT')
     else:
-        VSlog('1er load site ou URL_MAIN déjà définis  '+ str(MAIN))
-        return MAIN
-        
+        # si pas de zt dans settings on récup l'url une fois dans le site
+        if not ADDON.getSetting('ZT') and not (Sources == 'callpluging' or Sources == 'globalSources' ):
+            oRequestHandler = cRequestHandler(URL_HOST)
+            sHtmlContent = oRequestHandler.request()
+            MemorisedHost = oRequestHandler.getRealUrl()
+            ADDON.setSetting('ZT',MemorisedHost)
+            VSlog("ZT url vide  >> " + str(MemorisedHost) + ' sauvgarder >> '+ ADDON.getSetting('ZT'))
+            return ADDON.getSetting('ZT')
+        else:
+            VSlog("ZT pas besoin d'url")
+            return ADDON.getSetting('ZT')
 
 URL_MAIN = GetURL_MAIN()
 
@@ -94,82 +99,82 @@ def load():
 
     oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', 'http://venom/')
-    oOutputParameterHandler.addParameter('MAIN', URL_MAIN)
+    
     oGui.addDir(SITE_IDENTIFIER, 'showSearch', 'Recherche', 'search.png', oOutputParameterHandler)
 
     oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', MOVIE_NEWS[0])
-    oOutputParameterHandler.addParameter('MAIN', URL_MAIN)
+    
     oGui.addDir(SITE_IDENTIFIER, MOVIE_NEWS[1], 'Films (Derniers ajouts)', 'films_news.png', oOutputParameterHandler)
 
     oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', MOVIE_EXCLUS[0])
-    oOutputParameterHandler.addParameter('MAIN', URL_MAIN)
+    
     oGui.addDir(SITE_IDENTIFIER, MOVIE_EXCLUS[1], 'Exclus (Films populaires)', 'news.png', oOutputParameterHandler)
 
     oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', MOVIE_HD[0])
-    oOutputParameterHandler.addParameter('MAIN', URL_MAIN)
+    
     oGui.addDir(SITE_IDENTIFIER, MOVIE_HD[1], 'Blu-rays (720p & 1080p)', 'films_hd.png', oOutputParameterHandler)
 
     oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', MOVIE_3D[0])
-    oOutputParameterHandler.addParameter('MAIN', URL_MAIN)
+    
     oGui.addDir(SITE_IDENTIFIER, MOVIE_3D[1], 'Films 3D', 'news.png', oOutputParameterHandler)
 
     oOutputParameterHandler = cOutputParameterHandler()
-    oOutputParameterHandler.addParameter('MAIN', URL_MAIN)
+    
     oOutputParameterHandler.addParameter('siteUrl', MOVIE_HDLIGHT[0])
     oGui.addDir(SITE_IDENTIFIER, MOVIE_HDLIGHT[1], 'Films (x265 & x264)', 'films_hd.png', oOutputParameterHandler)
 
     oOutputParameterHandler = cOutputParameterHandler()
-    oOutputParameterHandler.addParameter('MAIN', URL_MAIN)
+    
     oOutputParameterHandler.addParameter('siteUrl', MOVIE_4K[0])
     oGui.addDir(SITE_IDENTIFIER, MOVIE_4K[1], 'Films 4k', 'films_hd.png', oOutputParameterHandler)
 
     oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', MOVIE_ANIME[0])
-    oOutputParameterHandler.addParameter('MAIN', URL_MAIN)
+    
     oGui.addDir(SITE_IDENTIFIER, MOVIE_ANIME[1], 'Dessins Animés', 'animes.png', oOutputParameterHandler)
 
     oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', MOVIE_GENRES[0])
-    oOutputParameterHandler.addParameter('MAIN', URL_MAIN)
+    
     oGui.addDir(SITE_IDENTIFIER, MOVIE_GENRES[1], 'Films (Genres)', 'films_genres.png', oOutputParameterHandler)
 
     oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', SERIE_VFS[0])
-    oOutputParameterHandler.addParameter('MAIN', URL_MAIN)
+    
     oGui.addDir(SITE_IDENTIFIER, SERIE_VFS[1], 'Séries VF (Derniers ajouts)', 'series_vf.png', oOutputParameterHandler)
 
     oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', SERIE_VOSTFRS[0])
-    oOutputParameterHandler.addParameter('MAIN', URL_MAIN)
+    
     oGui.addDir(SITE_IDENTIFIER, SERIE_VOSTFRS[1], 'Séries VOSTFR (Derniers ajouts)', 'series_vostfr.png', oOutputParameterHandler)
 
     oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', ANIM_VFS[0])
-    oOutputParameterHandler.addParameter('MAIN', URL_MAIN)
+    
     oGui.addDir(SITE_IDENTIFIER, ANIM_VFS[1], 'Animés VF', 'animes_vf.png', oOutputParameterHandler)
 
     oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', ANIM_VOSTFRS[0])
-    oOutputParameterHandler.addParameter('MAIN', URL_MAIN)
+    
     oGui.addDir(SITE_IDENTIFIER, ANIM_VOSTFRS[1], 'Animés VOSTFR', 'animes_vostfr.png', oOutputParameterHandler)
 
     oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', DOC_NEWS[0])
-    oOutputParameterHandler.addParameter('MAIN', URL_MAIN)
+    
     oGui.addDir(SITE_IDENTIFIER, DOC_NEWS[1], 'Documentaires', 'doc.png', oOutputParameterHandler)
 
     oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', TV_NEWS[0])
-    oOutputParameterHandler.addParameter('MAIN', URL_MAIN)
+    
     oGui.addDir(SITE_IDENTIFIER, TV_NEWS[1], 'Emissions TV', 'tv.png', oOutputParameterHandler)
 
     oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', SPECT_NEWS[0])
-    oOutputParameterHandler.addParameter('MAIN', URL_MAIN)
+    
     oGui.addDir(SITE_IDENTIFIER, SPECT_NEWS[1], 'Spectacles', 'star.png', oOutputParameterHandler)
 
     oGui.setEndOfDirectory()
@@ -219,7 +224,7 @@ def showGenre():
 
         oOutputParameterHandler = cOutputParameterHandler()
         oOutputParameterHandler.addParameter('siteUrl', sUrl)
-        oOutputParameterHandler.addParameter('MAIN', URL_MAIN)
+        
         oGui.addDir(SITE_IDENTIFIER, 'showMovies', sTitle, 'genres.png', oOutputParameterHandler)
 
     oGui.setEndOfDirectory()
@@ -310,7 +315,7 @@ def showMovies(sSearch = ''):
             oOutputParameterHandler.addParameter('siteUrl', sUrl2)
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
-            oOutputParameterHandler.addParameter('MAIN', URL_MAIN)
+            
             if 'films-gratuit' in sUrl2 or '4k' in sUrl2:
                 oGui.addMovie(SITE_IDENTIFIER, 'showMoviesLinks', sDisplayTitle, '', sThumb, '', oOutputParameterHandler)
             else:
@@ -324,7 +329,7 @@ def showMovies(sSearch = ''):
             if (aResult[0] == True):
                 oOutputParameterHandler = cOutputParameterHandler()
                 oOutputParameterHandler.addParameter('siteUrl', sSearch)
-                oOutputParameterHandler.addParameter('MAIN', URL_MAIN)
+                
                 oOutputParameterHandler.addParameter('Nextpagesearch', aResult[1][0])
                 oGui.addNext(SITE_IDENTIFIER, 'showMovies', '[COLOR teal]Next >>>[/COLOR]', oOutputParameterHandler)
 
@@ -333,7 +338,7 @@ def showMovies(sSearch = ''):
             if (sNextPage != False):
                 oOutputParameterHandler = cOutputParameterHandler()
                 oOutputParameterHandler.addParameter('siteUrl', sNextPage)
-                oOutputParameterHandler.addParameter('MAIN', URL_MAIN)
+                
                 oGui.addNext(SITE_IDENTIFIER, 'showMovies', '[COLOR teal]Next >>>[/COLOR]', oOutputParameterHandler)
                 
     if Nextpagesearch:
@@ -382,7 +387,7 @@ def showMoviesLinks():
         oOutputParameterHandler.addParameter('siteUrl', sUrl)
         oOutputParameterHandler.addParameter('sMovieTitle', sMovieTitle)
         oOutputParameterHandler.addParameter('sThumb', sThumb)
-        oOutputParameterHandler.addParameter('MAIN', URL_MAIN)
+        
         oGui.addMovie(SITE_IDENTIFIER, 'showHosters', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
 
     #on regarde si dispo dans d'autres qualités
@@ -408,7 +413,7 @@ def showMoviesLinks():
             oOutputParameterHandler.addParameter('siteUrl', sUrl)
             oOutputParameterHandler.addParameter('sMovieTitle', sMovieTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
-            oOutputParameterHandler.addParameter('MAIN', URL_MAIN)
+            
             oGui.addMovie(SITE_IDENTIFIER, 'showHosters', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
 
         progress_.VSclose(progress_)
@@ -477,7 +482,7 @@ def showSeriesLinks():
             oOutputParameterHandler.addParameter('siteUrl', sUrl)
             oOutputParameterHandler.addParameter('sMovieTitle', sMovieTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
-            oOutputParameterHandler.addParameter('MAIN', URL_MAIN)
+            
             oGui.addTV(SITE_IDENTIFIER, 'showSeriesHosters', sDisplayTitle, '', sThumb, '', oOutputParameterHandler)
 
         progress_.VSclose(progress_)
@@ -501,7 +506,7 @@ def showSeriesLinks():
             oOutputParameterHandler.addParameter('siteUrl', sUrl)
             oOutputParameterHandler.addParameter('sMovieTitle', sMovieTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
-            oOutputParameterHandler.addParameter('MAIN', URL_MAIN)
+            
             oGui.addTV(SITE_IDENTIFIER, 'showSeriesLinks', sTitle, 'series.png', sThumb, '', oOutputParameterHandler)
 
     oGui.setEndOfDirectory()
