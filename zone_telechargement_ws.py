@@ -23,16 +23,16 @@ SITE_DESC = 'Fichier en DDL, HD'
 
 URL_HOST = 'https://zone-telechargement1.ws/'
 
-ADDON = addon()
 
 def GetURL_MAIN():
+    ADDON = addon()
     MemorisedHost = ''
     oInputParameterHandler = cInputParameterHandler()
     MemorisedHost_2 = oInputParameterHandler.getValue('siteUrl')
     Sources = oInputParameterHandler.getValue('function')
 
-    # z = oInputParameterHandler.getAllParameter()
-    # VSlog(z)   
+    #z = oInputParameterHandler.getAllParameter()
+    #VSlog(z)   
     
     # quand vstream load tous les sites on passe >> globalSources
     # quand vstream load a partir du menu home on passe >> callplugin 
@@ -42,7 +42,9 @@ def GetURL_MAIN():
         sHtmlContent = oRequestHandler.request()
         MemorisedHost = oRequestHandler.getRealUrl()
         ADDON.setSetting('ZT',MemorisedHost)
+        
         VSlog("ZT url  >> " + str(MemorisedHost) + ' sauvgarder >> '+ ADDON.getSetting('ZT'))
+        
         return ADDON.getSetting('ZT')
     else:
         # si pas de zt dans settings on récup l'url une fois dans le site
@@ -51,7 +53,9 @@ def GetURL_MAIN():
             sHtmlContent = oRequestHandler.request()
             MemorisedHost = oRequestHandler.getRealUrl()
             ADDON.setSetting('ZT',MemorisedHost)
+            
             VSlog("ZT url vide  >> " + str(MemorisedHost) + ' sauvgarder >> '+ ADDON.getSetting('ZT'))
+            
             return ADDON.getSetting('ZT')
         else:
             VSlog("ZT pas besoin d'url")
@@ -192,33 +196,32 @@ def showSearch():
 def showGenre():
     oGui = cGui()
     
-    basePath = ''
 
     liste = []
-    liste.append( ['Action', URL_MAIN +  '?genrelist[]=1'] )
-    liste.append( ['Animation', URL_MAIN +  '?genrelist[]=2'] )
-    liste.append( ['Arts Martiaux', URL_MAIN +  '?genrelist[]=3'] )
-    liste.append( ['Aventure', URL_MAIN +  basePath + '?genrelist[]=4'] )
-    liste.append( ['Biopic', URL_MAIN +  basePath + '?genrelist[]=5'] )
-    liste.append( ['Comédie Dramatique', URL_MAIN +  basePath + '?genrelist[]=7'] )
-    liste.append( ['Comédie Musicale', URL_MAIN +  basePath + '?genrelist[]=8'] )
-    liste.append( ['Comédie', URL_MAIN +  basePath + '?genrelist[]=9'] )
-    liste.append( ['Divers', URL_MAIN +  basePath + '?genrelist[]=10'] )
-    liste.append( ['Documentaires', URL_MAIN +  basePath + '?genrelist[]=11'] )
-    liste.append( ['Drame', URL_MAIN +  basePath + '?genrelist[]=12'] )
-    liste.append( ['Epouvante Horreur', URL_MAIN +  basePath + '?genrelist[]=13'] )
-    liste.append( ['Espionnage', URL_MAIN +  basePath + '?genrelist[]=14'] )
-    liste.append( ['Famille', URL_MAIN +  basePath + '?genrelist[]=15'] )
-    liste.append( ['Fantastique', URL_MAIN +  basePath + 'genres/fantastique/'] )
-    liste.append( ['Guerre', URL_MAIN +  basePath + '?genrelist[]=17'] )
-    liste.append( ['Historique', URL_MAIN +  basePath + '?genrelist[]=18'] )
-    liste.append( ['Musical', URL_MAIN +  basePath + '?genrelist[]=19'] )
-    liste.append( ['Péplum', URL_MAIN +  basePath + '?genrelist[]=6'] )
-    liste.append( ['Policier', URL_MAIN +  basePath + '?genrelist[]=20'] )
-    liste.append( ['Romance', URL_MAIN +  basePath + '?genrelist[]=21'] )
-    liste.append( ['Science Fiction', URL_MAIN +  basePath + '?genrelist[]=22'] )
-    liste.append( ['Thriller', URL_MAIN +  basePath + '?genrelist[]=23'] )
-    liste.append( ['Western', URL_MAIN +  basePath + '?genrelist[]=24'] )
+    liste.append( ['Action', URL_MAIN + '?genrelist[]=1'] )
+    liste.append( ['Animation', URL_MAIN + '?genrelist[]=2'] )
+    liste.append( ['Arts Martiaux', URL_MAIN + '?genrelist[]=3'] )
+    liste.append( ['Aventure', URL_MAIN + '?genrelist[]=4'] )
+    liste.append( ['Biopic', URL_MAIN + '?genrelist[]=5'] )
+    liste.append( ['Comédie Dramatique', URL_MAIN + '?genrelist[]=7'] )
+    liste.append( ['Comédie Musicale', URL_MAIN + '?genrelist[]=8'] )
+    liste.append( ['Comédie', URL_MAIN + '?genrelist[]=9'] )
+    liste.append( ['Divers', URL_MAIN + '?genrelist[]=10'] )
+    liste.append( ['Documentaires', URL_MAIN + '?genrelist[]=11'] )
+    liste.append( ['Drame', URL_MAIN + '?genrelist[]=12'] )
+    liste.append( ['Epouvante Horreur', URL_MAIN + '?genrelist[]=13'] )
+    liste.append( ['Espionnage', URL_MAIN + '?genrelist[]=14'] )
+    liste.append( ['Famille', URL_MAIN + '?genrelist[]=15'] )
+    liste.append( ['Fantastique', URL_MAIN + 'genres/fantastique/'] )
+    liste.append( ['Guerre', URL_MAIN + '?genrelist[]=17'] )
+    liste.append( ['Historique', URL_MAIN + '?genrelist[]=18'] )
+    liste.append( ['Musical', URL_MAIN + '?genrelist[]=19'] )
+    liste.append( ['Péplum', URL_MAIN + '?genrelist[]=6'] )
+    liste.append( ['Policier', URL_MAIN + '?genrelist[]=20'] )
+    liste.append( ['Romance', URL_MAIN + '?genrelist[]=21'] )
+    liste.append( ['Science Fiction', URL_MAIN + '?genrelist[]=22'] )
+    liste.append( ['Thriller', URL_MAIN + '?genrelist[]=23'] )
+    liste.append( ['Western', URL_MAIN + '?genrelist[]=24'] )
 
     for sTitle, sUrl in liste:
 
