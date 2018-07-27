@@ -103,82 +103,66 @@ def load():
 
     oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', 'http://venom/')
-    
     oGui.addDir(SITE_IDENTIFIER, 'showSearch', 'Recherche', 'search.png', oOutputParameterHandler)
 
     oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', MOVIE_NEWS[0])
-    
     oGui.addDir(SITE_IDENTIFIER, MOVIE_NEWS[1], 'Films (Derniers ajouts)', 'films_news.png', oOutputParameterHandler)
 
     oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', MOVIE_EXCLUS[0])
-    
     oGui.addDir(SITE_IDENTIFIER, MOVIE_EXCLUS[1], 'Exclus (Films populaires)', 'news.png', oOutputParameterHandler)
 
     oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', MOVIE_HD[0])
-    
     oGui.addDir(SITE_IDENTIFIER, MOVIE_HD[1], 'Blu-rays (720p & 1080p)', 'films_hd.png', oOutputParameterHandler)
 
     oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', MOVIE_3D[0])
-    
     oGui.addDir(SITE_IDENTIFIER, MOVIE_3D[1], 'Films 3D', 'news.png', oOutputParameterHandler)
 
     oOutputParameterHandler = cOutputParameterHandler()
-    
     oOutputParameterHandler.addParameter('siteUrl', MOVIE_HDLIGHT[0])
     oGui.addDir(SITE_IDENTIFIER, MOVIE_HDLIGHT[1], 'Films (x265 & x264)', 'films_hd.png', oOutputParameterHandler)
 
     oOutputParameterHandler = cOutputParameterHandler()
-    
     oOutputParameterHandler.addParameter('siteUrl', MOVIE_4K[0])
     oGui.addDir(SITE_IDENTIFIER, MOVIE_4K[1], 'Films 4k', 'films_hd.png', oOutputParameterHandler)
 
     oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', MOVIE_ANIME[0])
-    
     oGui.addDir(SITE_IDENTIFIER, MOVIE_ANIME[1], 'Dessins Animés', 'animes.png', oOutputParameterHandler)
 
     oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', MOVIE_GENRES[0])
-    
     oGui.addDir(SITE_IDENTIFIER, MOVIE_GENRES[1], 'Films (Genres)', 'films_genres.png', oOutputParameterHandler)
 
     oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', SERIE_VFS[0])
-    
     oGui.addDir(SITE_IDENTIFIER, SERIE_VFS[1], 'Séries VF (Derniers ajouts)', 'series_vf.png', oOutputParameterHandler)
 
     oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', SERIE_VOSTFRS[0])
-    
     oGui.addDir(SITE_IDENTIFIER, SERIE_VOSTFRS[1], 'Séries VOSTFR (Derniers ajouts)', 'series_vostfr.png', oOutputParameterHandler)
 
     oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', ANIM_VFS[0])
-    
     oGui.addDir(SITE_IDENTIFIER, ANIM_VFS[1], 'Animés VF', 'animes_vf.png', oOutputParameterHandler)
 
     oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', ANIM_VOSTFRS[0])
-    
     oGui.addDir(SITE_IDENTIFIER, ANIM_VOSTFRS[1], 'Animés VOSTFR', 'animes_vostfr.png', oOutputParameterHandler)
 
     oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', DOC_NEWS[0])
-    
     oGui.addDir(SITE_IDENTIFIER, DOC_NEWS[1], 'Documentaires', 'doc.png', oOutputParameterHandler)
 
     oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', TV_NEWS[0])
-    
     oGui.addDir(SITE_IDENTIFIER, TV_NEWS[1], 'Emissions TV', 'tv.png', oOutputParameterHandler)
 
     oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', SPECT_NEWS[0])
-    
     oGui.addDir(SITE_IDENTIFIER, SPECT_NEWS[1], 'Spectacles', 'star.png', oOutputParameterHandler)
 
     oGui.setEndOfDirectory()
@@ -195,39 +179,39 @@ def showSearch():
 
 def showGenre():
     oGui = cGui()
-    
+
 
     liste = []
-    liste.append( ['Action', URL_MAIN + '?genrelist[]=1'] )
-    liste.append( ['Animation', URL_MAIN + '?genrelist[]=2'] )
-    liste.append( ['Arts Martiaux', URL_MAIN + '?genrelist[]=3'] )
-    liste.append( ['Aventure', URL_MAIN + '?genrelist[]=4'] )
-    liste.append( ['Biopic', URL_MAIN + '?genrelist[]=5'] )
-    liste.append( ['Comédie Dramatique', URL_MAIN + '?genrelist[]=7'] )
-    liste.append( ['Comédie Musicale', URL_MAIN + '?genrelist[]=8'] )
-    liste.append( ['Comédie', URL_MAIN + '?genrelist[]=9'] )
-    liste.append( ['Divers', URL_MAIN + '?genrelist[]=10'] )
-    liste.append( ['Documentaires', URL_MAIN + '?genrelist[]=11'] )
-    liste.append( ['Drame', URL_MAIN + '?genrelist[]=12'] )
-    liste.append( ['Epouvante Horreur', URL_MAIN + '?genrelist[]=13'] )
-    liste.append( ['Espionnage', URL_MAIN + '?genrelist[]=14'] )
-    liste.append( ['Famille', URL_MAIN + '?genrelist[]=15'] )
+    liste.append( ['Action', URL_MAIN + 'genres/action/'] )
+    liste.append( ['Animation', URL_MAIN + 'genres/animation/'] )
+    liste.append( ['Arts Martiaux', URL_MAIN + 'genres/martiaux/'] )
+    liste.append( ['Aventure', URL_MAIN + 'genres/aventure/'] )
+    liste.append( ['Biopic', URL_MAIN + 'genres/biographie/'] )
+    liste.append( ['Comédie Dramatique', URL_MAIN + 'genres/dramatique/'] )
+    liste.append( ['Comédie Musicale', URL_MAIN + 'genres/musicale/'] )
+    liste.append( ['Comédie', URL_MAIN + 'genres/comedie/'] )
+    liste.append( ['Divers', URL_MAIN + 'genres/divers/'] )
+    liste.append( ['Documentaires', URL_MAIN + 'genres/documentaire/'] )
+    liste.append( ['Drame', URL_MAIN + 'genres/drame/'] )
+    liste.append( ['Epouvante Horreur', URL_MAIN + 'genres/epouvante/'] )
+    liste.append( ['Espionnage', URL_MAIN + 'genres/espionnage/'] )
+    liste.append( ['Famille', URL_MAIN + 'genres/famille/'] )
     liste.append( ['Fantastique', URL_MAIN + 'genres/fantastique/'] )
-    liste.append( ['Guerre', URL_MAIN + '?genrelist[]=17'] )
-    liste.append( ['Historique', URL_MAIN + '?genrelist[]=18'] )
-    liste.append( ['Musical', URL_MAIN + '?genrelist[]=19'] )
-    liste.append( ['Péplum', URL_MAIN + '?genrelist[]=6'] )
-    liste.append( ['Policier', URL_MAIN + '?genrelist[]=20'] )
-    liste.append( ['Romance', URL_MAIN + '?genrelist[]=21'] )
-    liste.append( ['Science Fiction', URL_MAIN + '?genrelist[]=22'] )
-    liste.append( ['Thriller', URL_MAIN + '?genrelist[]=23'] )
-    liste.append( ['Western', URL_MAIN + '?genrelist[]=24'] )
+    liste.append( ['Guerre', URL_MAIN + 'genres/guerre/'] )
+    liste.append( ['Historique', URL_MAIN + 'genres/historique/'] )
+    liste.append( ['Musical', URL_MAIN + 'genres/musical/'] )
+    liste.append( ['Péplum', URL_MAIN + 'genres/peplum/'] )
+    liste.append( ['Policier', URL_MAIN + 'genres/policier/'] )
+    liste.append( ['Romance', URL_MAIN + 'genres/romance/'] )
+    liste.append( ['Science Fiction', URL_MAIN + 'genres/science/'] )
+    liste.append( ['Thriller', URL_MAIN + 'genres/thriller/'] )
+    liste.append( ['Western', URL_MAIN + 'genres/western'] )
 
     for sTitle, sUrl in liste:
 
         oOutputParameterHandler = cOutputParameterHandler()
         oOutputParameterHandler.addParameter('siteUrl', sUrl)
-        
+
         oGui.addDir(SITE_IDENTIFIER, 'showMovies', sTitle, 'genres.png', oOutputParameterHandler)
 
     oGui.setEndOfDirectory()
@@ -238,9 +222,6 @@ def showMovies(sSearch = ''):
     oInputParameterHandler = cInputParameterHandler()
     Nextpagesearch = oInputParameterHandler.getValue('Nextpagesearch')
     sUrl = oInputParameterHandler.getValue('siteUrl')
-    
-    if not sUrl.startswith('http'):
-       sUrl = URL_MAIN + sUrl
 
     bGlobal_Search = False
 
@@ -318,7 +299,6 @@ def showMovies(sSearch = ''):
             oOutputParameterHandler.addParameter('siteUrl', sUrl2)
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
-            
             if 'films-gratuit' in sUrl2 or '4k' in sUrl2:
                 oGui.addMovie(SITE_IDENTIFIER, 'showMoviesLinks', sDisplayTitle, '', sThumb, '', oOutputParameterHandler)
             else:
@@ -332,7 +312,6 @@ def showMovies(sSearch = ''):
             if (aResult[0] == True):
                 oOutputParameterHandler = cOutputParameterHandler()
                 oOutputParameterHandler.addParameter('siteUrl', sSearch)
-                
                 oOutputParameterHandler.addParameter('Nextpagesearch', aResult[1][0])
                 oGui.addNext(SITE_IDENTIFIER, 'showMovies', '[COLOR teal]Next >>>[/COLOR]', oOutputParameterHandler)
 
@@ -341,7 +320,6 @@ def showMovies(sSearch = ''):
             if (sNextPage != False):
                 oOutputParameterHandler = cOutputParameterHandler()
                 oOutputParameterHandler.addParameter('siteUrl', sNextPage)
-                
                 oGui.addNext(SITE_IDENTIFIER, 'showMovies', '[COLOR teal]Next >>>[/COLOR]', oOutputParameterHandler)
                 
     if Nextpagesearch:
@@ -416,7 +394,6 @@ def showMoviesLinks():
             oOutputParameterHandler.addParameter('siteUrl', sUrl)
             oOutputParameterHandler.addParameter('sMovieTitle', sMovieTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
-            
             oGui.addMovie(SITE_IDENTIFIER, 'showHosters', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
 
         progress_.VSclose(progress_)
@@ -485,7 +462,6 @@ def showSeriesLinks():
             oOutputParameterHandler.addParameter('siteUrl', sUrl)
             oOutputParameterHandler.addParameter('sMovieTitle', sMovieTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
-            
             oGui.addTV(SITE_IDENTIFIER, 'showSeriesHosters', sDisplayTitle, '', sThumb, '', oOutputParameterHandler)
 
         progress_.VSclose(progress_)
@@ -509,7 +485,6 @@ def showSeriesLinks():
             oOutputParameterHandler.addParameter('siteUrl', sUrl)
             oOutputParameterHandler.addParameter('sMovieTitle', sMovieTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
-            
             oGui.addTV(SITE_IDENTIFIER, 'showSeriesLinks', sTitle, 'series.png', sThumb, '', oOutputParameterHandler)
 
     oGui.setEndOfDirectory()
@@ -584,7 +559,6 @@ def showHosters():
 
                 oOutputParameterHandler.addParameter('sMovieTitle', sMovieTitle)
                 oOutputParameterHandler.addParameter('sThumb', sThumb)
-
                 oGui.addMovie(SITE_IDENTIFIER, 'Display_protected_link', sTitle, '', sThumb, '', oOutputParameterHandler)
 
         progress_.VSclose(progress_)
